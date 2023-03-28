@@ -1,0 +1,7 @@
+[en enu enc eng eni ena enz default]
+
+TAG_RELOADER2="7.76mm Reloading Device Mk. II";
+TAG_METALSCRAP="Steel Scrap";
+
+PICKUP_RELOADER2="You got the 7.76 reloading machine. This seems different...";
+PICKUP_METALSCRAP="Picked up some steel scrap...";
