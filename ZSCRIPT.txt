@@ -2,7 +2,6 @@
 version "4.10"
 
 //...doesn't stop me from copy-pasting though...
-//(primers and bullet lead can be cannibalized from 4.26mm rounds)
 class MetalScrap:HDAmmo{
 	default{
 		+inventory.ignoreskill +forcexybillboard +cannotpush
@@ -153,6 +152,8 @@ class FactoryAutoReloadingThingy:HDWeapon{
 			invoker.brass=counter;A_TakeInventory("SevenMilBrass",counter);
 			counter=min(30,countinv("FourMilAmmo"));
 			invoker.powders=counter;A_TakeInventory("FourMilAmmo",counter);
+			counter=min(60,countinv("MetalScrap"));
+			invoker.metals=counter;A_TakeInventory("MetalScrap",counter);
 			dropinventory(invoker);
 		}
 	}
