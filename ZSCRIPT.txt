@@ -1,6 +1,27 @@
 //losing a phone doesn't stop me
 version "4.10"
 
+class HDMetalScrapHandler : EventHandler
+{
+	override void CheckReplacement(ReplaceEvent e)
+	{
+		if (!e.Replacement)
+		{
+			return;
+		}
+
+		switch (e.Replacement.GetClassName())
+		{
+			case 'DecoPusher':
+				if (random[itemgrand]() <= 120)
+				{
+					e.Replacement = "HDMetalScrapSpawner";
+				}
+				break;
+		}
+	}
+}
+
 //...doesn't stop me from copy-pasting though...
 class MetalScrap:HDAmmo{
 	default{
@@ -38,7 +59,11 @@ class MetalScrap:HDAmmo{
 	}
 }
 
-
+class HDMetalScrapSpawner:RandomSpawner{
+	default{
+		dropitem "MetalScrap",153,30;
+	}
+}
 
 class FactoryAutoReloadingThingy:HDWeapon{
 	int powders;
