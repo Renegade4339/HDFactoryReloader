@@ -1,2 +1,3 @@
 Freedoom Team - Reloader Sprite
 Matt - Code Base
+Swampyrad/Swampie - Fixes and Testing
