@@ -1,25 +1,19 @@
 //losing a phone doesn't stop me
 version "4.10"
 
-class HDMetalScrapHandler : EventHandler
+class HDMetalScrapHandler : EventHandler//redid the spawner code
 {
-	override void CheckReplacement(ReplaceEvent e)
-	{
-		if (!e.Replacement)
-		{
-			return;
-		}
+	override void CheckReplacement( ReplaceEvent Scrap ){
 
-		switch (e.Replacement.GetClassName())
-		{
-			case 'DecoPusher':
-				if (random[itemgrand]() <= 120)
-				{
-					e.Replacement = "HDMetalScrapSpawner";
-				}
-				break;
-		}
-	}
+ switch ( Scrap.Replacee.GetClassName() ) {
+
+    case 'DecoPusher'   :   int rnd = random(0,255);//roll a number between 0 and 255
+                            if(rnd<=120)Scrap.Replacement = "HDMetalScrapSpawner";//spawn if rolled 120 or less
+        break;
+    }
+    Scrap.IsFinal = false;  //keep replacing if new DecoPushers are spawned
+
+  }
 }
 
 //...doesn't stop me from copy-pasting though...
@@ -59,9 +53,25 @@ class MetalScrap:HDAmmo{
 	}
 }
 
-class HDMetalScrapSpawner:RandomSpawner{
-	default{
-		dropitem "MetalScrap",153,30;
+//modified DecoPusher for generating scrap metal
+class HDMetalScrapSpawner:IdleDummy{
+	states{
+	spawn:
+		TNT1 A 0 nodelay{
+			int times=random(5,30);//number of scraps to spawn
+			class<actor> thingy="MetalScrap";//what item to spawn
+			
+			flinetracedata spawnpos;
+			for(int i=0;i<times;i++){//spawn each scrap in a random spot
+				LineTrace(
+					frandom(0,360),frandom(0,96),frandom(-45,45),
+					offsetz:32,
+					data:spawnpos
+				);
+				actor aaa=spawn(thingy,spawnpos.hitlocation-spawnpos.hitdir,ALLOW_REPLACE);
+				if(aaa)aaa.setz(aaa.floorz);
+			}
+		}stop;
 	}
 }
 
