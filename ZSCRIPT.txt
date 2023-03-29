@@ -68,11 +68,11 @@ class HDMetalScrapSpawner:RandomSpawner{
 class FactoryAutoReloadingThingy:HDWeapon{
 	int powders;
 	int brass;
-  int metalscraps;
+  int metals;
 	bool makinground;
 	override void beginplay(){
 		super.beginplay();
-		brass=0;powders=0;metalscraps=0;makinground=false;
+		brass=0;powders=0;metals=0;makinground=false;
 	}
 	override void Consolidate(){
   	int totalmetal=owner.countinv("MetalScrap");
@@ -158,7 +158,7 @@ class FactoryAutoReloadingThingy:HDWeapon{
 			setstatelabel("spawn");
 			return;
 		}
-		brass--;powders-=4;metals-=4;
+		brass--;powders-=4;metals-=8;
 		A_StartSound("roundmaker/pop",10);
 		if(!random(0,127)){
 			A_SpawnItemEx("HDExplosion");
@@ -170,7 +170,7 @@ class FactoryAutoReloadingThingy:HDWeapon{
 			anyotherconditions
 			&&countinv("SevenMilBrass")
 			&&countinv("FourMilAmmo")>=4
-      &&countnv("MetalScrap")>=8
+      &&countinv("MetalScrap")>=8
 		){
 			invoker.makinground=true;
 			int counter=min(10,countinv("SevenMilBrass"));
